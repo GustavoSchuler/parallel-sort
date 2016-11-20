@@ -12,8 +12,14 @@ class JobFactory:
         self.jobs_todo = [Job().list for i in range(10)]
 
     def getJob(self):
-        return self.jobs_todo.pop()
+        if self.jobs_todo:
+            job = self.jobs_todo.pop()
+        else:
+            job = None
+
+        return job
 
     def jobDone(self, job):
         self.jobs_done.append(job)
+        print("Job done: \n" + str(job))
 

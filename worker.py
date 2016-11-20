@@ -1,13 +1,28 @@
 import Pyro4
+from time import time
 
 
 class Worker(object):
 
     def __init__(self):
-        factory = Pyro4.Proxy("PYRONAME:factory")
+        t = time()
 
+        factory = Pyro4.Proxy("PYRONAME:factory")
         job = factory.getJob()
-        print(job)
+
+        while job is not None:
+            self.bubblesort(job)
+            print("Job finished in " + str(time() - t) + " seconds.")
+            factory.jobDone(job)
+            job = factory.getJob()
+
+    def bubblesort(self, list):
+        for i in range(len(list)):
+            for k in range(len(list) - 1, i, -1):
+                if (list[k] < list[k - 1]):
+                    tmp = list[k]
+                    list[k] = list[k - 1]
+                    list[k - 1] = tmp
 
 
 def main():
