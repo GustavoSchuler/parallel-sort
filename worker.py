@@ -11,10 +11,13 @@ class Worker(object):
         job = factory.getJob()
 
         while job is not None:
+            job_time = time()
             self.bubblesort(job)
-            print("Job finished in " + str(time() - t) + " seconds.")
+            print("Job finished in " + str(time() - job_time) + " seconds.")
             factory.jobDone(job)
             job = factory.getJob()
+
+        print("\nNo more jobs to do.\nTotal worked time: " + str(time() - t))
 
     def bubblesort(self, list):
         for i in range(len(list)):
